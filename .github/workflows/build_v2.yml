@@ -25,6 +25,7 @@ jobs:
           $response1 = Invoke-WebRequest -Uri "https://api.github.com/repos/QzQ/MoviePilot/git/commits/$latest_commit_sha" | ConvertFrom-Json
           $newArray = [System.Collections.ArrayList]::new()
           # 遍历数组中的每个对象
+          $newArray.Add($latest_commit_sha)
           foreach ($item in $response1.parents) {
             # 获取每个对象的sha属性值
             $sha = $item.sha
