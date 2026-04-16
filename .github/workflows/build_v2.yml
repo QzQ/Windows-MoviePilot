@@ -95,7 +95,6 @@ jobs:
           cd MoviePilot
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-          Remove-Item ".\config\app.env"
           $hash_version=(git log -2 --pretty=format:"%h" | Select-Object -Skip 1)
           $GIT_LOG=(git log -2 --oneline | Select-Object -Last 1)
           echo $GIT_LOG
@@ -113,6 +112,7 @@ jobs:
           Invoke-WebRequest -Uri "https://github.com/jxxghp/MoviePilot-Plugins/archive/refs/heads/main.zip" -OutFile "MoviePilot-Plugins-main.zip"
           Expand-Archive -Path "MoviePilot-Plugins-main.zip" -DestinationPath "MoviePilot-Plugins-main"
           Move-Item -Path "MoviePilot-Plugins-main/MoviePilot-Plugins-main/plugins.v2/*" -Destination . -Force
+          Remove-Item "clashruleprovider" -Recurse -Force -ErrorAction SilentlyContinue
           Remove-Item -Path "MoviePilot-Plugins-main.zip"
           Remove-Item -Path "MoviePilot-Plugins-main" -Recurse -Force
           Get-ChildItem -Path . -Recurse -Filter "requirements.txt" | ForEach-Object { pip install -r $_ }
